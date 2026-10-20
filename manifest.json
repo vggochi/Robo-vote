@@ -1,0 +1,13 @@
+{
+  "name": "ROBO VOTE — Clube de Robótica",
+  "short_name": "ROBO VOTE",
+  "description": "Eleição simulada educacional do Clube de Robótica.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#07111f",
+  "theme_color": "#07111f",
+  "icons": [
+    {"src": "/assets/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
+  ]
+}

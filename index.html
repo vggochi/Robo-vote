@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="ROBO VOTE — eleição simulada do Clube de Robótica.">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link rel="preload" href="/css/style.css" as="style">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="prefetch" href="/resultados.html" as="document">
+  <title>ROBO VOTE | Clube de Robótica</title>
+</head>
+<body>
+  <div class="grid-bg" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="ROBO VOTE início">
+      <span class="brand-mark"><img src="/assets/logo.svg" alt=""></span>
+      <span><strong>ROBO<span>VOTE</span></strong><small>CLUBE DE ROBÓTICA</small></span>
+    </a>
+    <nav aria-label="Navegação principal">
+      <a class="nav-link active" href="#inicio">Início</a>
+      <a class="nav-link" href="#candidatos">Candidatos</a>
+      <a class="nav-link" href="#como-funciona">Como funciona</a>
+    </nav>
+    <div class="header-actions">
+      <span id="connection-pill" class="status-pill"><i></i><span>Verificando conexão</span></span>
+      <button id="notify-btn" class="icon-button" title="Ativar notificações" aria-label="Ativar notificações">♧</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap" id="inicio">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse"></span> ELEIÇÃO SIMULADA · TEMPORADA 2026</div>
+        <h1>O FUTURO<br>ESTÁ NAS <span>SUAS MÃOS.</span></h1>
+        <p>Ideias que constroem. Pessoas que inspiram. Escolha quem vai levar o Clube de Robótica para o próximo nível.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#candidatos">Conhecer candidatos <span>↗</span></a>
+          <a class="button secondary" href="#como-funciona">Como funciona</a>
+        </div>
+        <div class="hero-foot"><span class="mini-icon">⌁</span> UMA SIMULAÇÃO EDUCACIONAL — NÃO É UMA VOTAÇÃO OFICIAL</div>
+      </div>
+      <div class="hero-visual" aria-label="Ilustração de um robô">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="scan-line"></div>
+        <div class="robot">
+          <div class="antenna"></div><div class="robot-head">
+            <div class="robot-ear left"></div><div class="robot-ear right"></div>
+            <div class="robot-eyes"><i></i><i></i></div><div class="robot-mouth"></div>
+          </div>
+          <div class="robot-neck"></div><div class="robot-body"><span class="core">RV</span><i></i></div>
+          <div class="robot-arm arm-left"></div><div class="robot-arm arm-right"></div>
+        </div>
+        <div class="float-tag tag-top"><span class="tag-dot"></span> SISTEMA ONLINE</div>
+        <div class="float-tag tag-bottom"><span>01</span> SUA VOZ, NOSSO FUTURO</div>
+        <div class="visual-caption">ROBO VOTE <span>// 26.01</span></div>
+      </div>
+    </section>
+
+    <section class="stats wrap" aria-label="Resumo da eleição">
+      <div class="stat"><span class="stat-icon">⌘</span><div><strong id="candidate-count">03</strong><small>CANDIDATOS</small></div></div>
+      <div class="stat"><span class="stat-icon">◈</span><div><strong id="vote-count">00</strong><small>VOTOS REGISTRADOS</small></div></div>
+      <div class="stat"><span class="stat-icon">↻</span><div><strong id="pending-count">00</strong><small>PENDENTES DE SYNC</small></div></div>
+      <div class="stat"><span class="stat-icon">▣</span><div><strong>100%</strong><small>SIMULAÇÃO DIDÁTICA</small></div></div>
+    </section>
+
+    <section class="section wrap" id="candidatos">
+      <div class="section-heading">
+        <div><div class="eyebrow">01 / CONHEÇA AS IDEIAS</div><h2>QUEM VAI <span>FAZER ACONTECER?</span></h2></div>
+        <div class="section-note">Analise as propostas e escolha<br>o projeto que representa você.</div>
+      </div>
+      <div id="candidate-grid" class="candidate-grid"></div>
+      <div class="vote-notice"><span class="notice-icon">ⓘ</span><p><strong>Antes de votar</strong><br>Esta é uma atividade educacional. A escolha fica salva neste navegador; quando estiver offline, aparecerá como pendente.</p></div>
+    </section>
+
+    <section class="section how-section" id="como-funciona">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><div class="eyebrow">02 / TECNOLOGIA EM AÇÃO</div><h2>FUNCIONA ATÉ <span>SEM SINAL.</span></h2></div>
+          <p class="section-note">A experiência foi pensada para resistir a conexões instáveis.</p>
+        </div>
+        <div class="tech-grid">
+          <article class="tech-card"><span class="tech-number">01</span><div class="tech-icon">▤</div><h3>Cache inteligente</h3><p>O Service Worker guarda os arquivos essenciais para abrir a interface sem internet.</p><small>CACHE API</small></article>
+          <article class="tech-card"><span class="tech-number">02</span><div class="tech-icon">▦</div><h3>Fila local</h3><p>As operações feitas offline ficam guardadas no IndexedDB até a próxima tentativa de sincronização.</p><small>INDEXEDDB</small></article>
+          <article class="tech-card"><span class="tech-number">03</span><div class="tech-icon">↻</div><h3>Retorno da conexão</h3><p>Ao voltar online, o app tenta processar as operações pendentes nesta simulação local.</p><small>SYNC + ONLINE</small></article>
+        </div>
+        <div class="sync-panel">
+          <div class="sync-symbol">↻</div><div class="sync-copy"><strong id="sync-title">Tudo pronto para sincronizar</strong><p id="sync-description">Os registros locais são demonstrativos e não são enviados a um servidor real.</p></div>
+          <button id="sync-btn" class="button secondary">Tentar sincronizar <span>→</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap results-section" id="resultados">
+      <div class="section-heading">
+        <div><div class="eyebrow">03 / PLACAR DA SIMULAÇÃO</div><h2>O QUE A GALERA <span>ESCOLHEU.</span></h2></div>
+        <span class="demo-tag">DADOS DESTE NAVEGADOR</span>
+      </div>
+      <div id="results-list" class="results-list"></div>
+      <div class="results-foot"><span>◉</span> Resultados locais de demonstração. Não representam votos reais.</div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner"><a class="brand" href="#inicio"><span class="brand-mark"><img src="/assets/logo.svg" alt=""></span><span><strong>ROBO<span>VOTE</span></strong><small>CLUBE DE ROBÓTICA</small></span></a><p>PROJETO EDUCACIONAL · DESENVOLVIMENTO DE SISTEMAS</p><a href="/README.md">DOCUMENTAÇÃO ↗</a></div>
+  </footer>
+
+  <dialog id="vote-dialog" class="vote-dialog">
+    <form method="dialog" class="dialog-close-form"><button class="dialog-close" aria-label="Fechar">×</button></form>
+    <div class="dialog-symbol">✓</div><div class="eyebrow">CONFIRMAÇÃO DE ESCOLHA</div>
+    <h2>Seu voto simulado?</h2><p id="dialog-candidate"></p>
+    <p class="dialog-warning">Esta ação é apenas demonstrativa e será armazenada neste navegador.</p>
+    <div class="dialog-actions"><button id="cancel-vote" class="button secondary">Voltar</button><button id="confirm-vote" class="button primary">Confirmar escolha <span>→</span></button></div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/js/database.js" defer></script>
+  <script src="/js/app.js" defer></script>
+</body>
+</html>
