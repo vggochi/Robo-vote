@@ -2,120 +2,31 @@
 
 **Slogan:** Sua escolha move o futuro.
 
-Projeto educacional de eleição simulada, criado com HTML, CSS e JavaScript puro para demonstrar PWA, Service Worker, Cache API, IndexedDB, notificações e estratégias de carregamento.
+**Equipe 4 — Armagedom**
+- Emanuele
+- Giovanna
+- João Victor Corrêa
+- Valentina
 
-> **Aviso:** esta versão é uma demonstração local. Não é uma eleição oficial. As operações não são enviadas a um servidor, não devem ser tratadas como votos reais e não oferecem garantias de integridade eleitoral.
+## Objetivo
 
-## Funcionalidades
+Desenvolver uma aplicação web de eleição simulada que permita aos usuários conhecer candidatos e suas propostas, registrar escolhas fictícias e consultar resultados, mantendo as funcionalidades essenciais disponíveis mesmo quando a conexão com a internet estiver instável ou indisponível. O projeto tem como finalidade demonstrar, na prática, a aplicação de tecnologias web modernas, como Progressive Web Apps (PWA), Service Worker, Cache API, IndexedDB, notificações e estratégias de otimização de carregamento. Além disso, busca evidenciar como o armazenamento local e o processamento de operações pendentes podem contribuir para a continuidade de uso em ambientes offline.
 
-- Interface responsiva com candidatos e propostas fictícias.
-- Registro de escolha simulada com confirmação.
-- Fila local usando IndexedDB (com fallback para localStorage).
-- Indicador de conexão e quantidade de operações pendentes.
-- Tentativa de processamento local quando a conexão retorna.
-- Service Worker com instalação, cache de recursos, interceptação `fetch`, fallback e limpeza de versões antigas.
-- Notificação local solicitada pelo usuário e tratamento de `push` no Service Worker.
-- PWA Manifest.
-- Preload do CSS principal e prefetch da página de resultados.
-- Layout com suporte a `prefers-reduced-motion`.
+## Decisões técnicas
 
-## Como executar
+O projeto foi desenvolvido com **HTML, CSS e JavaScript puro**, sem frameworks, para demonstrar diretamente o funcionamento das tecnologias utilizadas.
 
-O Service Worker só funciona em contexto seguro: `localhost` ou HTTPS. Não abra `index.html` diretamente por `file://`.
+- **PWA e Web App Manifest:** permitem que a aplicação seja instalável e apresente características semelhantes às de um aplicativo, incluindo informações de nome, ícones e configuração de exibição.
+- **Service Worker:** intercepta requisições, gerencia o cache dos recursos essenciais e permite que a aplicação continue acessível mesmo sem conexão com a internet.
+- **Cache API:** armazena arquivos como HTML, CSS, JavaScript, imagens e outros recursos necessários para carregar a interface offline.
+- **Estratégias de cache:** utiliza *Cache First* para recursos estáticos e *Network First* para navegações, com uma página de fallback para situações em que a rede está indisponível.
+- **IndexedDB:** armazena localmente as operações realizadas, organizando-as em filas de pendências e registros processados. O `localStorage` é utilizado como alternativa caso o IndexedDB não esteja disponível.
+- **Fila de operações offline:** permite registrar escolhas simuladas sem conexão e identificá-las como pendentes, realizando o processamento local quando a conectividade retorna. Esse processamento é uma simulação didática, não uma sincronização real com servidor.
+- **Background Sync e evento `online`:** permitem tentar processar as operações pendentes quando a conexão retorna, conforme o suporte do navegador.
+- **Notificações:** utiliza a API de notificações do navegador para informar o usuário, mediante autorização. O Service Worker também possui suporte a eventos de push, embora o envio de notificações push reais não esteja configurado.
+- **Preload, Prefetch e DNS-prefetch:** aplica `preload` para antecipar o carregamento do CSS principal e `prefetch` para um possível acesso futuro à página de resultados. O `dns-prefetch` não foi incluído porque a aplicação não depende de domínios externos para seus recursos essenciais.
+- **Responsividade e acessibilidade:** utiliza CSS responsivo e respeita a preferência `prefers-reduced-motion`, reduzindo animações para usuários que assim configurarem o dispositivo.
 
-### Opção A — Python
+### Limitações da demonstração
 
-Na pasta do projeto, execute:
-
-```bash
-python -m http.server 8000
-```
-
-Abra `http://localhost:8000`.
-
-### Opção B — Node.js
-
-Se tiver Node.js instalado, execute:
-
-```bash
-npx serve .
-```
-
-Use a URL local informada pelo comando.
-
-## Como testar offline
-
-1. Abra o site em `localhost` e aguarde o Service Worker terminar a instalação.
-2. No Chrome, abra DevTools → **Application** → **Service Workers** e confirme que `sw.js` está ativo.
-3. Em **Application → Cache Storage**, confira `robo-vote-v1` e os recursos do app shell.
-4. Abra o site uma vez online para preencher o cache.
-5. Em DevTools → **Network**, marque **Offline**.
-6. Atualize a página. A interface e os recursos essenciais devem continuar disponíveis.
-7. Clique em escolher candidatura e confirme. A contagem de pendentes deve aumentar.
-8. Volte para **Online**. A aplicação tenta processar as operações pendentes na simulação local.
-9. Em DevTools → **Application → Storage → IndexedDB**, confira o banco `robo-vote-db`, com stores `pending` e `synced`.
-10. Clique no ícone de notificações e conceda permissão para testar a notificação local.
-
-## Estratégia de cache
-
-- **Cache First** para CSS, JavaScript, SVG, imagens e manifest: prioriza recursos locais e reduz dependência da rede.
-- **Network First** para navegações: tenta obter a versão atual e recorre ao cache quando a rede falha.
-- **Fallback offline**: a navegação tenta a URL em cache, depois a página inicial e, por último, a página `offline.html`.
-
-A lista de `APP_SHELL` é pré-cacheada durante `install`. Quando o cache muda de versão, o evento `activate` remove caches antigos.
-
-## Fila offline e sincronização
-
-A operação é guardada no IndexedDB com status `pending`. Quando há conexão, o código de demonstração move o registro para `synced` e atualiza a interface. Isso **simula** o ciclo de sincronização, mas não envia dados para um backend. O Background Sync é tentado quando o navegador oferece suporte; o evento `online` também aciona uma tentativa.
-
-Em um cenário com servidor real, seria necessário criar um endpoint HTTPS, enviar as operações com `fetch`, validar os dados no servidor, tratar reenvios idempotentes e só marcar uma operação como sincronizada após confirmação real do servidor. Background Sync não é suportado em todos os navegadores.
-
-## Notificações
-
-O botão solicita permissão ao usuário e exibe uma notificação local. O Service Worker também inclui handlers `push` e `notificationclick`. **Push real não está configurado**: isso exigiria um servidor de aplicação, assinatura/subscrição Push, chaves VAPID e um provedor push. O fluxo local é a simulação didática prevista no enunciado.
-
-## Preload, prefetch e DNS-prefetch
-
-- `preload` é usado para `/css/style.css`, recurso local essencial para a primeira renderização.
-- `prefetch` aponta para `/resultados.html`, uma navegação provável após votar; é de baixa prioridade e o navegador pode decidir não executá-lo.
-- `dns-prefetch` não foi incluído porque esta versão não depende de um domínio externo para recursos críticos. Não seria útil adicionar uma dica para um domínio que o app não usa. Se uma fonte ou API externa for adicionada, reavaliar e medir no DevTools.
-
-## Evidências para a entrega
-
-Adicione capturas reais em `evidencias/`, por exemplo:
-- `01-service-worker.png`
-- `02-cache-storage.png`
-- `03-offline-home.png`
-- `04-pending-vote.png`
-- `05-indexeddb.png`
-- `06-notification.png`
-- `07-network-performance.png`
-- `08-lighthouse-before-after.png`
-
-As imagens não estão pré-preenchidas: capture-as durante a execução real para que sejam evidências válidas.
-
-## Limitações conhecidas
-
-- Dados e resultados são locais a cada navegador/dispositivo.
-- Não há autenticação, servidor ou base de dados compartilhada.
-- O voto pode ser removido pelo usuário ao limpar os dados do navegador.
-- O estado “sincronizado” significa apenas processado na simulação local, não confirmado por servidor.
-- Notificações dependem do suporte do navegador e de permissão explícita.
-- Para testar recursos de PWA/Service Worker, use `localhost` ou HTTPS.
-
-## Estrutura
-
-```text
-robo-vote/
-├── index.html
-├── resultados.html
-├── offline.html
-├── manifest.json
-├── sw.js
-├── css/style.css
-├── js/app.js
-├── js/database.js
-├── assets/logo.svg
-├── evidencias/
-└── README.md
-```
+A aplicação é exclusivamente educacional e não representa um sistema eleitoral oficial. As operações são armazenadas e processadas localmente, sem envio para um servidor ou compartilhamento de resultados entre dispositivos. Portanto, o estado de operação processada não significa confirmação por um backend, e os dados podem ser perdidos se o armazenamento do navegador for apagado. Uma versão com sincronização real exigiria uma API segura, validação no servidor, controle de duplicidade e confirmação das operações recebidas.
