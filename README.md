@@ -27,6 +27,9 @@ O projeto foi desenvolvido com **HTML, CSS e JavaScript puro**, sem frameworks, 
 - **Preload, Prefetch e DNS-prefetch:** aplica `preload` para antecipar o carregamento do CSS principal e `prefetch` para um possível acesso futuro à página de resultados. O `dns-prefetch` não foi incluído porque a aplicação não depende de domínios externos para seus recursos essenciais.
 - **Responsividade e acessibilidade:** utiliza CSS responsivo e respeita a preferência `prefers-reduced-motion`, reduzindo animações para usuários que assim configurarem o dispositivo.
 
+## Vídeo no Youtube
+https://youtu.be/BNTTuh5NBIQ
+
 ### Limitações da demonstração
 
 A aplicação é exclusivamente educacional e não representa um sistema eleitoral oficial. As operações são armazenadas e processadas localmente, sem envio para um servidor ou compartilhamento de resultados entre dispositivos. Portanto, o estado de operação processada não significa confirmação por um backend, e os dados podem ser perdidos se o armazenamento do navegador for apagado. Uma versão com sincronização real exigiria uma API segura, validação no servidor, controle de duplicidade e confirmação das operações recebidas.
